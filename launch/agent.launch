@@ -1,0 +1,3 @@
+<launch>
+	<node pkg="epos2" type="agent.py" name="agent_node" output="screen"/>
+</launch>

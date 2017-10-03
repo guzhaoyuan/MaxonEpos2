@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="epos2" type="controller" name="controller_node" output="screen"/>
+	<node pkg="epos2" type="controller2" name="controller_node2" output="screen"/>
+</launch>

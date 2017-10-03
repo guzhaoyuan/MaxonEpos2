@@ -1,0 +1,5 @@
+float64 position
+int32 isAbsolute
+---
+float64 position_new
+float64 velocity # not used yet

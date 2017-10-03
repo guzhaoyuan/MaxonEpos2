@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="epos2" type="controller" name="controller_node" output="screen"/>
+	<node pkg="epos2" type="agent.py" name="agent_node" output="screen"/>
+</launch>

@@ -1,0 +1,6 @@
+<launch>
+	<node pkg="epos2" type="position_server" name="position_server_node" output="screen"/>
+	<node pkg="epos2" type="position_client.py" name="position_client_node" args="-0 -1" output="screen">
+	</node>
+
+</launch>

@@ -1,0 +1,8 @@
+int32 position
+int16 torque
+---
+int32 position_new
+float64 reward
+bool done
+float64 velocity
+int16 current
