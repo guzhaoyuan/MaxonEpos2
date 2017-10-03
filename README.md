@@ -1,6 +1,6 @@
-# epos2
+# MaxonEpos2
 
-maxon DC motor current control, communicate with rospy
+A controller written in CPP to control maxon DC motor,  support position, velocity & current control, communicate with controller using rospy
 
 ## Protocal
 
@@ -33,15 +33,17 @@ for driver and library, find 'EPOS_Linux_Library' on maxon official site(https:/
 
 ## Framework
 
-node1: request position or torque, calculate on return
+client: request position or torque
 
-node2: receive request and execute, wait until end of this step, return new state and info, then wait for new request
+server: receive request and execute, return new state and info, then wait for new request
 
 ## Files
 
 ### src
 
-controller.cpp: node for controlling torque, also work as env
+controller.cpp: node for controlling torque for servo1
+controller2.cpp: node for controlling torque for servo2
+controller3.cpp: node for controlling torque for servo1&2
 
 test_epos2.cpp: test for develop
 wrap.cpp: wrap api to make code clean and easy to program
@@ -52,8 +54,6 @@ current_server.cpp: create service to control current
 velocity_server.cpp: create service to control velocity
 
 ### scripts
-
-agent,py: request torque, also works as rl agent
 
 request.py: node for requesting service and get info from controller, now backup, not for use
 
@@ -69,29 +69,12 @@ headings
 
 use as a ros package, put the whole epos2 files under workspace/src and compile with catkin
 
-	#under ${workspace}
+	# under ${workspace}
 	catkin_make
 	rosrun epos2 current_server
+	# in another terminal window
 	rosrun epos2 current_client.py
+	
+## TODO
 
-## Benchmark
-
-time taken:
-
-- write position: **9ms**
-- write current: **5ms**
-- get current: **5ms**
-- get position: **5ms**
-- get velocity: **5ms**
-- ros send request immediately after get response: **7ms**(from the perspective of server)
-- rl get action: **<=3ms**
-- rl update & pull: **<=4ms**
-
-- get all 3 parameter takes about **14ms** on average
-
-- rosservice + choose_action + update <= 14ms
-
-now strategy: 	get position 5ms, calculate velocity based on position, get request & return reward 7ms, 
-				rl get action <=3ms, rl update & pull <=4ms
-
-controlling cycle: 30ms, 33.3Hz
+- try ros control
