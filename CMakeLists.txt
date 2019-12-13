@@ -158,6 +158,8 @@ add_executable(time_test src/time_test.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 add_dependencies(controller epos2_gencpp)
+add_dependencies(controller2 epos2_gencpp)
+add_dependencies(controller3 epos2_gencpp)
 add_dependencies(position_server epos2_gencpp)
 add_dependencies(velocity_server epos2_gencpp)
 add_dependencies(current_server epos2_gencpp)
