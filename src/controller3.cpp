@@ -33,10 +33,10 @@
 	reward = -(theta^2 + 0.1*theta_dt^2 + 0.001*action^2)
 */
 
-ros::Time begin;
+ros::Time begin_time;
 // ros::Duration interval(1.0); // 1s
 ros::Duration interval(0,33000000); // 0s,33ms
-ros::Time next;
+ros::Time next_time;
 
 int position_old, position_new; // for calc velocity
 float angle_old, angle_new, pVelocityIs, pVelocityIs_old, reward, torque, torque2;
@@ -162,19 +162,19 @@ bool applyTorque(epos2::Torque2::Request &req, epos2::Torque2::Response &res)
 		pVelocityIs_old = pVelocityIs;
 
 		// the force transform of the data type can cause problem
-		while((next - ros::Time::now()).toSec()<0){
-			next += interval;
+		while((next_time - ros::Time::now()).toSec()<0){
+			next_time += interval;
 			// ROS_INFO("");
 		}
-		(next - ros::Time::now()).sleep();
+		(next_time - ros::Time::now()).sleep();
 
-		// if((next - ros::Time::now()).toSec()<0){
-		// 	next += interval;
-		// 	if((next - ros::Time::now()).toSec()<0){
-		// 		next = 
+		// if((next_time - ros::Time::now()).toSec()<0){
+		// 	next_time += interval;
+		// 	if((next_time - ros::Time::now()).toSec()<0){
+		// 		next_time = 
 		// 	}
 		// }
-		// (next - ros::Time::now()).sleep();
+		// (next_time - ros::Time::now()).sleep();
 
 
 
@@ -204,8 +204,8 @@ int main(int argc, char **argv)
 	ros::init(argc, argv, "epos2_controller3");
 	ros::NodeHandle n;
 
-	begin = ros::Time::now();
-	next = begin + interval;
+	begin_time = ros::Time::now();
+	next_time = begin_time + interval;
 	int lResult = MMC_FAILED;
 	unsigned int ulErrorCode = 0;
 	// Set parameter for usb IO operation

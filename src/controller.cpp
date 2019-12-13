@@ -33,10 +33,10 @@
 	reward = -(theta^2 + 0.1*theta_dt^2 + 0.001*action^2)
 */
 
-ros::Time begin;
+ros::Time begin_time;
 // ros::Duration interval(1.0); // 1s
 ros::Duration interval(0,33000000); // 0s,33ms
-ros::Time next;
+ros::Time next_time;
 
 int position_old, position_new; // for calc velocity
 float angle_old, angle_new, pVelocityIs, pVelocityIs_old, reward, torque;
@@ -162,11 +162,10 @@ bool applyTorque(epos2::Torque::Request &req, epos2::Torque::Response &res)
 		angle_old = angle_new;
 		pVelocityIs_old = pVelocityIs;
 
-		while((next - ros::Time::now()).toSec()<0){
-			next += interval;
-			ROS_INFO("");
+		while((next_time - ros::Time::now()).toSec()<0){
+			next_time += interval;
 		}
-		(next - ros::Time::now()).sleep();
+		(next_time - ros::Time::now()).sleep();
 
 		//TODO: if this step exceeds the timestep, write command it as quick as possible
 
@@ -199,8 +198,8 @@ int main(int argc, char **argv)
 	ros::init(argc, argv, "epos2_controller");
 	ros::NodeHandle n;
 
-	begin = ros::Time::now();
-	next = begin + interval;
+	begin_time = ros::Time::now();
+	next_time = begin_time + interval;
 	int lResult = MMC_FAILED;
 	unsigned int ulErrorCode = 0;
 	// Set parameter for usb IO operation
